@@ -26,7 +26,7 @@ val videoIds = listOf(
 
 val videos = getVideosById()
 
-fun getVideosById(): List<Video> {
+private fun getVideosById(): List<Video> {
     val videoList = mutableListOf<Video>()
     for (videoId in videoIds) {
         val video = createVideo(videoId);
@@ -38,7 +38,7 @@ fun getVideosById(): List<Video> {
 /**
  * Létrehozza a video data-t.
  */
-fun createVideo(videoId: String): Video {
+private fun createVideo(videoId: String): Video {
     return Video(
         videoId,
         getNameFromVideoId(videoId),
