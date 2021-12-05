@@ -25,7 +25,7 @@ import io.getstream.chat.android.client.socket.InitConnectionListener
 import io.getstream.videochat.R
 
 /**
- * Demo api kulcs.
+ * Demo api kulcs. Lejár: 2021.01.05-én
  */
 private const val APIKEY = "sfgpnf7xhf2r"
 
