@@ -5,4 +5,20 @@
     <string name="youtube_thumbnail">Youtube thumbnail</string>
     <string name="chat_avatar">Chat Avatar</string>
     <string name="live_for">Élő videó</string>
+    <string name="header_text">Youtube with chat</string>
+    <string name="about">Rólam</string>
+    <string name="about_text">Az alkalmazást készítette: Czibere Zoltán</string>
+    <string name="counter">1</string>
+    <string name="videoId"><![CDATA[<videoId>]]></string>
+    <string name="add">Hozzáadás</string>
+    <string name="ytVideoId">Youtube Videó azonosító</string>
+    <string name="delete">Törlés</string>
+    <string name="videoIdAdded">Videó id hozzáadva</string>
+    <string name="pleaseInputId">Kérem adjon meg videó azonosítót!</string>
+    <string name="yes">Igen</string>
+    <string name="deleted">Minden kitörölve</string>
+    <string name="no">Nem</string>
+    <string name="deleteAllQuestion">Minden törlése?</string>
+    <string name="areyousuredeleteAll">Biztosan töröl mindent?</string>
+    <string name="recommendation">Javaslatok hozzáadása</string>
 </resources>

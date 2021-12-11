@@ -21,7 +21,7 @@ import coil.transform.CircleCropTransformation
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import hu.unideb.youtube.model.Video
+import hu.unideb.youtube.model.Models
 import hu.unideb.youtube.model.nicknameColor
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.api.models.QueryChannelRequest
@@ -45,7 +45,7 @@ class VideoActivity : AppCompatActivity(R.layout.activity_video) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val video = intent.getSerializableExtra(VIDEO_INTENT_EXTRA) as Video
+        val video = intent.getSerializableExtra(VIDEO_INTENT_EXTRA) as Models
         val chatClient = ChatClient.instance()
         val findViewById = findViewById<YouTubePlayerView>(R.id.youtubeVideoPlayer)
         findViewById.apply {
@@ -159,7 +159,7 @@ class MessageAdapter : RecyclerView.Adapter<MessageViewHolder>() {
 }
 
 class MessageViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.fragment_message, parent, false)
+    LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
 ) {
     private val chatAvatar: ImageView by lazy { itemView.findViewById<ImageView>(R.id.chatAvatar) }
     private val chatUserName: TextView by lazy { itemView.findViewById<TextView>(R.id.chatUserName) }
@@ -194,7 +194,7 @@ fun Message.toViewHolderMessage() =
         text
     )
 
-fun createVideoIntent(context: Context, video: Video) =
+fun createVideoIntent(context: Context, models: Models) =
     Intent(context, VideoActivity::class.java).apply {
-        putExtra(VIDEO_INTENT_EXTRA, video)
+        putExtra(VIDEO_INTENT_EXTRA, models)
     }

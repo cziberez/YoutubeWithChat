@@ -1,14 +1,14 @@
 package hu.unideb.youtube.model
 
 import android.graphics.Color
-import hu.unideb.youtube.asynctask.YoutubeVideoTitleTask
+import hu.unideb.youtube.asynctask.YoutubeVideoTitleProcessTask
 import io.getstream.chat.android.client.models.User
 import java.io.Serializable
 
 /**
  * A videókat reprezentáló model.
  */
-data class Video(val id: String, val name: String, val image: String) : Serializable
+data class Models(val id: String, val name: String, val image: String) : Serializable
 
 /**
  * A betöltendő videó azonosítói.
@@ -26,8 +26,8 @@ val videoIds = listOf(
 
 val videos = getVideosById()
 
-private fun getVideosById(): List<Video> {
-    val videoList = mutableListOf<Video>()
+private fun getVideosById(): List<Models> {
+    val videoList = mutableListOf<Models>()
     for (videoId in videoIds) {
         val video = createVideo(videoId);
         videoList.add(video);
@@ -38,8 +38,8 @@ private fun getVideosById(): List<Video> {
 /**
  * Létrehozza a video data-t.
  */
-private fun createVideo(videoId: String): Video {
-    return Video(
+private fun createVideo(videoId: String): Models {
+    return Models(
         videoId,
         getNameFromVideoId(videoId),
         "https://img.youtube.com/vi/$videoId/default.jpg"
@@ -97,7 +97,7 @@ val User.token: String
     get() = tokensMap[id] ?: ""
 
 private fun getNameFromVideoId(videoId: String): String {
-    return YoutubeVideoTitleTask().execute("https://www.youtube.com/oembed?url=youtube.com/watch?v=$videoId&format=json")
+    return YoutubeVideoTitleProcessTask().execute(videoId)
         .get()
 }
 

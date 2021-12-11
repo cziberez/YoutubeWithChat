@@ -1,6 +1,7 @@
 package hu.unideb.youtube
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import hu.unideb.youtube.model.Video
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import hu.unideb.youtube.model.Models
 import hu.unideb.youtube.model.demoUsers
 import hu.unideb.youtube.model.token
 import hu.unideb.youtube.model.videos
@@ -32,7 +34,6 @@ private const val APIKEY = "sfgpnf7xhf2r"
 class VideosListActivity : AppCompatActivity(R.layout.activity_videos_list) {
 
     private val videosAdapter = VideoAdapter(::onVideoSelected)
-
     private lateinit var client: ChatClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,26 +60,32 @@ class VideosListActivity : AppCompatActivity(R.layout.activity_videos_list) {
             }
         })
 
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+        fab.setOnClickListener { startActivity(createRecommendationIntent(this)) }
+
     }
 
-    private fun onVideoSelected(video: Video) {
-        startActivity(createVideoIntent(this, video))
+    private fun onVideoSelected(models: Models) {
+        startActivity(createVideoIntent(this, models))
     }
 }
 
-class VideoAdapter(private val onVideoSelected: (Video) -> Unit) :
+private fun createRecommendationIntent(context: Context) =
+    Intent(context, RecomendationActivity::class.java).apply {}
+
+class VideoAdapter(private val onVideoSelected: (Models) -> Unit) :
     RecyclerView.Adapter<VideoViewHolder>() {
-    private var videos: List<Video> = listOf()
+    private var models: List<Models> = listOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder =
         VideoViewHolder(parent, onVideoSelected)
 
-    override fun getItemCount(): Int = videos.size
+    override fun getItemCount(): Int = models.size
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) =
-        holder.bind(videos[position])
+        holder.bind(models[position])
 
-    fun addVideos(newVideos: List<Video>) {
-        videos = videos + newVideos
-        notifyItemRangeInserted(videos.size - newVideos.size, newVideos.size)
+    fun addVideos(newModels: List<Models>) {
+        models = models + newModels
+        notifyItemRangeInserted(models.size - newModels.size, newModels.size)
     }
 }
 
@@ -91,16 +98,16 @@ class VerticalDividerItemDecorator(context: Context) : DividerItemDecoration(con
 
 class VideoViewHolder(
     parent: ViewGroup,
-    private val onVideoSelected: (Video) -> Unit
+    private val onVideoSelected: (Models) -> Unit
 ) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(R.layout.fragment_video, parent, false)
+    LayoutInflater.from(parent.context).inflate(R.layout.item_video, parent, false)
 ) {
-    private val youtubeVideo: ImageView by lazy { itemView.findViewById<ImageView>(R.id.ytVideo) }
-    private val youtubeVideoName: TextView by lazy { itemView.findViewById<TextView>(R.id.ytVideoName) }
+    private val youtubeVideo: ImageView by lazy { itemView.findViewById(R.id.ytVideo) }
+    private val youtubeVideoName: TextView by lazy { itemView.findViewById(R.id.ytVideoName) }
 
-    fun bind(video: Video) {
-        youtubeVideoName.text = video.name
-        youtubeVideo.load(video.image)
-        itemView.setOnClickListener { onVideoSelected(video) }
+    fun bind(models: Models) {
+        youtubeVideoName.text = models.name
+        youtubeVideo.load(models.image)
+        itemView.setOnClickListener { onVideoSelected(models) }
     }
 }

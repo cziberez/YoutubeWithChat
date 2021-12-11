@@ -8,11 +8,13 @@ import java.net.URL
 /**
  * Youtube videó címeket feldolgozó Async Task.
  */
-internal class YoutubeVideoTitleTask : AsyncTask<String, Void, String>() {
+internal class YoutubeVideoTitleProcessTask : AsyncTask<String, Void, String>() {
 
-    override fun doInBackground(vararg urls: String): String? {
+    override fun doInBackground(vararg videoIds: String): String? {
         return try {
-            val apiResponse = URL(urls[0]).readText()
+            val videoId = videoIds[0]
+            val apiResponse =
+                URL("https://www.youtube.com/oembed?url=youtube.com/watch?v=$videoId&format=json").readText()
             val parsedJson = parseJson(apiResponse)
             return parsedJson?.getString("title").toString()
         } catch (e: Exception) {
