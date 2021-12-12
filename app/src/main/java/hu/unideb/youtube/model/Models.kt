@@ -97,7 +97,6 @@ val User.token: String
     get() = tokensMap[id] ?: ""
 
 private fun getNameFromVideoId(videoId: String): String {
-    return YoutubeVideoTitleProcessTask().execute(videoId)
-        .get()
+    return YoutubeVideoTitleProcessTask().execute(videoId).get()
 }
 
